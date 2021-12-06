@@ -4,6 +4,10 @@ import ClockClasses.Clock;
 import ClockClasses.ClockWithSeconds;
 import ClockClasses.IWatch;
 import ClockClasses.States;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
         
@@ -121,6 +125,97 @@ public class WatchShop {
     public void RemoveWatch(int ind){
         listClocks.remove(ind);
     }
+    
+    public void SaveToFile (String Path){
+        
+        try(FileWriter Writer = new FileWriter(Path, false))
+        {
+            Writer.write("JAVA Watch Shop\n\n");
+            
+            int counter = 1;
+            for( IWatch listClock : listClocks){
+                Writer.write("= " + (counter++) + " =" + '\n');
+                Writer.write("Name: " + listClock.GetName() + '\n');
+                Writer.write("Price: " + listClock.GetPrice() + '\n');
+                Writer.write("Current time: " + listClock.GetTime() + '\n');
+                Writer.append('\n');
+                
+                
+             
+            }
+            
+            if (counter == 1) Writer.write("EMPTY!");
+           
+             
+            Writer.flush();
+            Writer.close();
+        }
+        catch(IOException ex){
+             
+            System.out.println(ex.getMessage());
+        } 
+    } 
+        
+    
+    public void GetFromFile(String Path){
+        
+        File file = new File(Path);     
+        
+        
+        try(Scanner Scan = new Scanner(file)){
+            
+            String Buff, Name = "", Price = "", Time= "";
+            
+            while (Scan.hasNextLine()){
+                Buff = Scan.nextLine();
+                if (Buff.contains("Name")){
+                    Name = Buff.replace("Name:", "");
+                }
+                if (Buff.contains("Price")){
+                    Price = Buff.replace("Price:", "");
+                }
+                if (Buff.contains("Current time")){
+                    Time = Buff.replace("Current time: ", "");
+                    String[] timearr = Time.split(":");
+                    if (timearr.length == 3){
+                        listClocks.add(new ClockWithSeconds(Integer.parseInt(Price.trim()), 
+                                Name, 
+                                Integer.parseInt(timearr[0].trim()),
+                                Integer.parseInt(timearr[1].trim()),
+                                Integer.parseInt(timearr[2].trim())));
+                    }
+                    else{
+                        listClocks.add(new Clock(Integer.parseInt(Price), 
+                                Name, 
+                                Integer.parseInt(timearr[0].trim()),
+                                Integer.parseInt(timearr[1].trim()))); 
+                    }
+                    Name = ""; Time = ""; Price = ""; 
+                        
+                    
+                }
+                
+                    
+                    
+                
+            
+            
+            }
+            
+            
+        
+        }
+        catch(IOException ex){
+             
+            System.out.println(ex.getMessage());
+        } 
+        
+        
+        
+        
+    }
+    
+    
 
 
 

@@ -1,0 +1,11 @@
+JAVA Watch Shop
+
+= 0 =
+Name: asas
+Current time: 1 : 0 : 0
+= 1 =
+Name: asdasd
+Current time: 3 : 3 : 0
+= 2 =
+Name: sadasd
+Current time: 3 : 2 : 12

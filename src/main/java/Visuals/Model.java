@@ -51,6 +51,14 @@ public class Model {
     void reval(){
         event();
     }
+    
+    void SaveToFile(String Path){
+        WS.SaveToFile(Path);
+    }
+    
+    void GetFromFile(String Path){
+        WS.GetFromFile(Path);
+    }
   
 
   
